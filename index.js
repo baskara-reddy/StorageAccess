@@ -1,16 +1,25 @@
-/** @format */
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */
 
-import {AppRegistry} from 'react-native';
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 
-import { StackNavigator } from 'react-navigation'
-import ImageBrowser from './ImageBrowser'
+import CameraScreen from './component/CameraScreen';
 
-import App from './App';
-import {name as appName} from './app.json';
+export default class rncameraroll extends Component {
+  render() {
+    return (
+      <CameraScreen/>
+    );
+  }
+}
 
-const Navigation = StackNavigator({
-    App: { screen: App },
-    ImageBrowser: { screen: ImageBrowser }
-  });
-
-AppRegistry.registerComponent(appName, () => Navigation);
+AppRegistry.registerComponent('rncameraroll', () => rncameraroll);
