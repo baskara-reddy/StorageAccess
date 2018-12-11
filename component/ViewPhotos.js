@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PhotoView from 'react-native-photo-view';
 import {
   Image,
   View,
@@ -10,7 +11,7 @@ import {
 } from 'react-native';
 
 const { width } = Dimensions.get('window')
-//const { height } = Dimensions.get('window')
+const { height } = Dimensions.get('window')
 
 class ViewPhotos extends Component {
 
@@ -22,7 +23,7 @@ class ViewPhotos extends Component {
 
   setIndex = (key) => {
     this.setState({ index: key });
-    this.setState({uri: this.props.photoArray[key].node.image.uri})
+    this.setState({uri: this.props.photoArray[key].node.image.uri});
     }
 
   toggleModal = () => {
@@ -32,24 +33,27 @@ class ViewPhotos extends Component {
   render() {
     console.log('state in render :', this.state)
     return (
-      <View style={styles.container}>
+      <View style={styles.modalContainer}>
         <Modal 
            animationType={"slide"} 
            transparent={false} 
            visible={this.state.modalVisible} 
            onRequestClose={() => console.log('closed')}>
-           <View style={styles.Container}>
+           <View style={styles.container}>
              <TouchableHighlight
                 style={{ opacity: 1 }}
                 key={1}
                 underlayColor='transparent'
                 onPress={() => { this.setState({uri: '../assets/addPhoto.jpg'}); this.toggleModal(); }}
             >
-            <Image
+            <PhotoView
               source={{uri: this.state.uri}}
+              resizeMode="contain"
+              backgroundColor="#999"
               style={{
                 width: width,
-                height: width 
+                height: height,
+                alignSelf: 'center' 
               }} />
              </TouchableHighlight>
            </View>
