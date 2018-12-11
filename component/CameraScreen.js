@@ -5,7 +5,8 @@ import {
   Image,
   View,
   TouchableOpacity,
-  Text
+  Text,
+  PermissionsAndroid
 } from 'react-native';
 
 import ViewPhotos from './ViewPhotos';
@@ -25,16 +26,33 @@ class CameraScreen extends Component {
       })
   }
 
+  async handleLoadImages() {
+    try 
+    {
+     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
+       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+           console.log('Storage Access Permission granted!');
+           this.getPhotosFromGallery();
+          } else {
+             console.log('Storage Access Permissions denied :(');
+           }
+    } 
+    catch (err) {
+             console.warn(err);
+          }
+    }
+
   render() {
     if (this.state.showPhotoGallery) {
       return (
         <ViewPhotos
-          photoArray={this.state.photoArray} />
-      )
+          photoArray={this.state.photoArray} 
+        />
+      );
     }
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={() => { this.getPhotosFromGallery() }}>
+        <TouchableOpacity style={styles.button} onPress={() => { this.handleLoadImages() }}>
           <Image source={require("../assets/addPhoto.png")}/>
           <Text>Images</Text>
         </TouchableOpacity>
